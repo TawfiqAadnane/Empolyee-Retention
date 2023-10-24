@@ -49,4 +49,23 @@ class FileOperation:
             self.logger.info('Exception raised while loading Model: %s' %e)
             raise Exception()
         
-        
+    
+    def correct_model(self, cluster_number): ### find the best model
+        try:
+            self.logger.info('Start if finding correct model')
+            self.cluster_number = cluster_number
+            self.folder_name = 'apps/model'
+            self.list_of_model_files = []
+            self.list_of_files = os.listdir(self.folder_name)
+            for self.file in self.list_of_files:
+                try:
+                    if(self.file.index(str(self.cluster_number))!=1):
+                        self.model_name = self.file
+                except:
+                    continue
+            self.model_name = self.model_name.split('.')[0]
+            self.logger.info('End of finding the correct model')
+            return self.model_name
+        except Exception as e:
+            self.logger.info('Exception raised while finding the correct model'+str(e))
+            raise Exception()
